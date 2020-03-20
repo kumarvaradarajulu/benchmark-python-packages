@@ -1,0 +1,13 @@
+{
+  "cus": {
+    "name": "Test",
+    "address": "Test Address, Some Street, Some city, Some state, Some Country",
+    "phone": 99888888,
+    "dob": null,
+    "preference": "mid-day"
+  },
+  "lead": {
+    "source": "Lead source",
+    "reliability": 100
+  }
+}
