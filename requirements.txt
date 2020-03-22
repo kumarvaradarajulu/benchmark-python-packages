@@ -1,0 +1,4 @@
+simplejson
+python-rapidjson
+ujson
+orjson
