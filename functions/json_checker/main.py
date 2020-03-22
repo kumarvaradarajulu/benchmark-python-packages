@@ -110,8 +110,8 @@ class Data(CustomerModel, LeadModel):
 def time_it(func):
     def inner(*args, **kwargs):
         func_name = func.__name__
-        t = timeit.Timer(lambda: f"{func_name}(*{args}, **{kwargs})", globals=globals())
-        number = 1000000
+        t = timeit.Timer(lambda: func(*args, **kwargs), globals=globals())
+        number = 100
         secs = t.timeit(number)
         print("Library={}, Calls/sec={}, Totsecs={}".format(args[0].__name__, round(number / secs, 2), round(secs, 4)))
 
@@ -155,7 +155,7 @@ def metrics_json_decode(number):
     with open(os.path.join("json_checker", "data.json")) as f:
         data = f.read()
     for json_module in (pyjson, simplejson, orjson, rapidjson, ujson):
-        secs = timeit.timeit(lambda: f"json_module.loads(data)", number=number)
+        secs = timeit.timeit(lambda: json_module.loads(data), number=number)
         print("Library={}, Calls/sec={}, Totsecs={}".format(json_module.__name__, round(number / secs, 2), round(secs, 4)))
 
 
@@ -164,13 +164,17 @@ def metrics_json_encode(number, large_dict):
     print("Metris for Json encode")
     print("---------------------------")
     for json_module in (pyjson, simplejson, orjson, rapidjson, ujson):
-        secs = timeit.timeit(lambda: f"json_module.dumps(large_dict)", number=number)
+        secs = timeit.timeit(lambda: json_module.dumps(large_dict), number=number)
         print("Library={}, Calls/sec={}, Totsecs={}".format(json_module.__name__, round(number / secs, 2), round(secs, 4)))
 
 
 def main():
-    large_dict = {i: str(i) for i in range(10000)}
-    number = 10000000
+    large_dict = {str(i): str(i) for i in range(10000)}
+    number = 1000
     metrics_json_as_descriptor()
     metrics_json_decode(number)
     metrics_json_encode(number, large_dict)
+
+    
+if __name__ == "__main__":
+    main()
