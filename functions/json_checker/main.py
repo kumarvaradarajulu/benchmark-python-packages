@@ -111,7 +111,7 @@ def time_it(func):
     def inner(*args, **kwargs):
         func_name = func.__name__
         t = timeit.Timer(lambda: func(*args, **kwargs), globals=globals())
-        number = 100
+        number = 100000
         secs = t.timeit(number)
         print("Library={}, Calls/sec={}, Totsecs={}".format(args[0].__name__, round(number / secs, 2), round(secs, 4)))
 
@@ -170,10 +170,10 @@ def metrics_json_encode(number, large_dict):
 
 def main():
     large_dict = {str(i): str(i) for i in range(10000)}
-    number = 1000
+    number = 100000
     metrics_json_as_descriptor()
-    metrics_json_decode(number)
-    metrics_json_encode(number, large_dict)
+    # metrics_json_decode(number)
+    # metrics_json_encode(number, large_dict)
 
     
 if __name__ == "__main__":
